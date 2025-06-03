@@ -27,7 +27,7 @@ public class Canvas {
     private static int MAX_Y = 0;
     private static Canvas instance = new Canvas();
 
-    private ArrayList<org.academiadecodigo.simplegraphics.graphics.Shape> shapes = new ArrayList<>();
+    private ArrayList<Shape> shapes = new ArrayList<>();
     private BufferedImage background;
     private JFrame frame;
     private CanvasComponent component;
@@ -114,7 +114,7 @@ public class Canvas {
      *
      * @param shape the shape to display
      */
-    public void show(org.academiadecodigo.simplegraphics.graphics.Shape shape) {
+    public void show(Shape shape) {
         if (!shapes.contains(shape)) {
             shapes.add(shape);
         }
@@ -127,7 +127,7 @@ public class Canvas {
      *
      * @param shape the shape to hide
      */
-    public void hide(org.academiadecodigo.simplegraphics.graphics.Shape shape) {
+    public void hide(Shape shape) {
         if (shapes.contains(shape)) {
             shapes.remove(shape);
         }
@@ -230,7 +230,7 @@ public class Canvas {
                 g.drawImage(background, 0, 0, null);
             }
 
-            for (org.academiadecodigo.simplegraphics.graphics.Shape s : new ArrayList<>(shapes)) {
+            for (Shape s : new ArrayList<>(shapes)) {
                 Graphics2D g2D = (Graphics2D) g.create();
                 s.paintShape(g2D);
                 g2D.dispose();
