@@ -1,7 +1,9 @@
-package com.codeforall.simplegraphics.pictures;
+package org.academiadecodigo.simplegraphics.pictures;
 
-import com.codeforall.simplegraphics.graphics.Movable;
-import com.codeforall.simplegraphics.graphics.Shape;
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
+import org.academiadecodigo.simplegraphics.graphics.Movable;
+import org.academiadecodigo.simplegraphics.graphics.Shape;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,7 +17,7 @@ import java.net.URL;
  *
  * Implements:
  * <ul>
- *     <li>{@link Shape} – for rendering and bounding box info</li>
+ *     <li>{@link org.academiadecodigo.simplegraphics.graphics.Shape} – for rendering and bounding box info</li>
  *     <li>{@link Movable} – for translation and scaling</li>
  * </ul>
  */
@@ -139,7 +141,7 @@ public class Picture implements Shape, Movable {
             ex.printStackTrace();
         }
 
-        com.codeforall.simplegraphics.graphics.Canvas.getInstance().repaint();
+        Canvas.getInstance().repaint();
     }
 
     /**
@@ -248,7 +250,7 @@ public class Picture implements Shape, Movable {
      * @param i the pixel index
      * @return the color at pixel i
      */
-    public com.codeforall.simplegraphics.graphics.Color getColorAt(int i) {
+    public Color getColorAt(int i) {
 
         if (image == null || i < 0 || i >= pixels()) {
             throw new IndexOutOfBoundsException("" + i);
@@ -264,7 +266,7 @@ public class Picture implements Shape, Movable {
      * @param i     the pixel index
      * @param color the new color for the pixel
      */
-    public void setColorAt(int i, com.codeforall.simplegraphics.graphics.Color color) {
+    public void setColorAt(int i, Color color) {
 
         if (image == null || i < 0 || i >= pixels()) {
             throw new IndexOutOfBoundsException("" + i);
@@ -281,14 +283,14 @@ public class Picture implements Shape, Movable {
      * @param y the y-coordinate (row) of the pixel
      * @return the color of the pixel
      */
-    public com.codeforall.simplegraphics.graphics.Color getColorAt(int x, int y) {
+    public Color getColorAt(int x, int y) {
 
         if (image == null || x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
             throw new IndexOutOfBoundsException("(" + x + "," + y + ")");
 
         } else {
             int rgb = image.getRGB(x, y) & 0xFFFFFF;
-            return new com.codeforall.simplegraphics.graphics.Color(rgb / 65536, (rgb / 256) % 256, rgb % 256);
+            return new Color(rgb / 65536, (rgb / 256) % 256, rgb % 256);
         }
     }
 
@@ -299,14 +301,14 @@ public class Picture implements Shape, Movable {
      * @param y     the y-coordinate (row) of the pixel
      * @param color the color of the pixel at the given row and column
      */
-    public void setColorAt(int x, int y, com.codeforall.simplegraphics.graphics.Color color) {
+    public void setColorAt(int x, int y, Color color) {
 
         if (image == null || x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
             throw new IndexOutOfBoundsException("(" + x + "," + y + ")");
 
         } else {
             image.setRGB(x, y, ((int) color.getRed()) * 65536 + ((int) color.getGreen()) * 256 + (int) color.getBlue());
-            com.codeforall.simplegraphics.graphics.Canvas.getInstance().repaint();
+            Canvas.getInstance().repaint();
         }
     }
 
@@ -320,7 +322,7 @@ public class Picture implements Shape, Movable {
     public void translate(double dx, double dy) {
         x += dx;
         y += dy;
-        com.codeforall.simplegraphics.graphics.Canvas.getInstance().repaint();
+        Canvas.getInstance().repaint();
     }
 
     /**
@@ -333,7 +335,7 @@ public class Picture implements Shape, Movable {
     public void grow(double dw, double dh) {
         xGrow += dw;
         yGrow += dh;
-        com.codeforall.simplegraphics.graphics.Canvas.getInstance().repaint();
+        Canvas.getInstance().repaint();
     }
 
     /**
@@ -341,7 +343,7 @@ public class Picture implements Shape, Movable {
      */
     @Override
     public void draw() {
-        com.codeforall.simplegraphics.graphics.Canvas.getInstance().show(this);
+        Canvas.getInstance().show(this);
     }
 
     /**
@@ -349,7 +351,7 @@ public class Picture implements Shape, Movable {
      */
     @Override
     public void delete() {
-        com.codeforall.simplegraphics.graphics.Canvas.getInstance().hide(this);
+        Canvas.getInstance().hide(this);
     }
 
     /**

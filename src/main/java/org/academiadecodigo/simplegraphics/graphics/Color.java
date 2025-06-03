@@ -1,4 +1,4 @@
-package com.codeforall.simplegraphics.graphics;
+package org.academiadecodigo.simplegraphics.graphics;
 
 /**
  * Represents a simple RGB color definition used for graphical shapes.

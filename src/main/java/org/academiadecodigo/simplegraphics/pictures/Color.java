@@ -1,4 +1,4 @@
-package com.codeforall.simplegraphics.pictures;
+package org.academiadecodigo.simplegraphics.pictures;
 
 /**
  * A simple representation of an RGB color for pictures.

@@ -1,4 +1,4 @@
-package com.codeforall.simplegraphics.mouse;
+package org.academiadecodigo.simplegraphics.mouse;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.codeforall.simplegraphics.graphics.Canvas;
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
 
 /**
  * Instantiate a Mouse for obtaining mouse handling capability
@@ -57,7 +57,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
                 MouseEventType eventType = (MouseEventType) iterator.next();
 
                 if (eventType == MouseEventType.MOUSE_CLICKED) {
-                    handler.mouseClicked(new com.codeforall.simplegraphics.mouse.MouseEvent(e.getX(), e.getY(), MouseEventType.MOUSE_CLICKED));
+                    handler.mouseClicked(new org.academiadecodigo.simplegraphics.mouse.MouseEvent(e.getX(), e.getY(), MouseEventType.MOUSE_CLICKED));
                 }
             }
         }
@@ -77,7 +77,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
                 MouseEventType eventType = (MouseEventType) iterator.next();
 
                 if (eventType == MouseEventType.MOUSE_MOVED) {
-                    handler.mouseMoved(new com.codeforall.simplegraphics.mouse.MouseEvent(e.getX(), e.getY(), MouseEventType.MOUSE_MOVED));
+                    handler.mouseMoved(new org.academiadecodigo.simplegraphics.mouse.MouseEvent(e.getX(), e.getY(), MouseEventType.MOUSE_MOVED));
                 }
             }
         }

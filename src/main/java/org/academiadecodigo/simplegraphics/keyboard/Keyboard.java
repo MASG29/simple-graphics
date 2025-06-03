@@ -1,6 +1,6 @@
-package com.codeforall.simplegraphics.keyboard;
+package org.academiadecodigo.simplegraphics.keyboard;
 
-import com.codeforall.simplegraphics.graphics.Canvas;
+import org.academiadecodigo.simplegraphics.graphics.Canvas;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

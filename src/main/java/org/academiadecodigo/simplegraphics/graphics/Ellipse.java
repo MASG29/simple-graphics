@@ -1,25 +1,22 @@
-package com.codeforall.simplegraphics.graphics;
+package org.academiadecodigo.simplegraphics.graphics;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.Ellipse2D;
 
 /**
- * The {@code Rectangle} class represents a drawable and optionally filled rectangle
- * that can be displayed on a canvas. This class allows manipulation of the rectangle's
- * size, position, and color, and provides basic drawing and transformation capabilities.
+ * Represents an ellipse shape that can be drawn, filled, moved, and resized.
+ * The ellipse is defined by its bounding box, which determines its x/y position, width, and height.
+ * This class integrates with the {@link Canvas} to visually render itself.
  *
  * Implements:
- *  <ul>
- *      <li>{@link com.codeforall.simplegraphics.graphics.Shape} – for rendering and bounding box info</li>
- *      <li>{@link Colorable} – for setting its color</li>
- *      <li>{@link Fillable} – for supporting fill operations</li>
- *      <li>{@link Movable} – for translation and scaling</li>
- *  </ul>
- *
- * <strong>Note:</strong> This class is distinct from {@code java.awt.Rectangle}
- * and is intended for use within the simplegraphics library.
+ * <ul>
+ *   <li>{@link Shape} – for rendering and bounding box info</li>
+ *   <li>{@link Colorable} – for setting its color</li>
+ *   <li>{@link Fillable} – for supporting fill operations</li>
+ *   <li>{@link Movable} – for translation and scaling</li>
+ * </ul>
  */
-public class Rectangle implements Shape, Colorable, Fillable, Movable {
+public class Ellipse implements Shape, Colorable, Fillable, Movable {
 
     private Color color = Color.BLACK;
     private boolean filled = false;
@@ -29,24 +26,14 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     private double height;
 
     /**
-     * Constructs an empty rectangle.
-     */
-    public Rectangle() {
-        x = 0;
-        y = 0;
-        width = 0;
-        height = 0;
-    }
-
-    /**
-     * Constructs a rectangle.
+     * Constructs an ellipse.
      *
      * @param x      the leftmost x-coordinate
      * @param y      the topmost y-coordinate
-     * @param width  the width
-     * @param height the height
+     * @param width  the width of the bounding box
+     * @param height the height of the bounding box
      */
-    public Rectangle(double x, double y, double width, double height) {
+    public Ellipse(double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -54,7 +41,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Gets the leftmost x-position of this rectangle.
+     * Gets the leftmost x-position of this ellipse.
      *
      * @return the leftmost x-position
      */
@@ -64,7 +51,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Gets the topmost y-position of this rectangle.
+     * Gets the topmost y-position of this ellipse.
      *
      * @return the topmost y-position
      */
@@ -73,8 +60,9 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
         return (int) Math.round(y);
     }
 
+
     /**
-     * Gets the width of this rectangle.
+     * Gets the width of the bounding box.
      *
      * @return the width
      */
@@ -84,7 +72,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Gets the height of this rectangle.
+     * Gets the height of the bounding box.
      *
      * @return the height
      */
@@ -94,7 +82,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Moves this rectangle by a given amount.
+     * Moves this ellipse by a given amount.
      *
      * @param dx the amount by which to move in x-direction
      * @param dy the amount by which to move in y-direction
@@ -107,11 +95,12 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Resizes this rectangle both horizontally and vertically.
+     * Resizes this ellipse both horizontally and vertically.
      *
      * @param dw the amount by which to resize the width on each side
      * @param dh the amount by which to resize the height on each side
      */
+    @Override
     public void grow(double dw, double dh) {
         width += 2 * dw;
         height += 2 * dh;
@@ -121,7 +110,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Sets the color of this rectangle.
+     * Sets the color of this ellipse.
      *
      * @param newColor the new color
      */
@@ -132,7 +121,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Draws this rectangle.
+     * Draws this ellipse on the canvas.
      */
     @Override
     public void draw() {
@@ -141,7 +130,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Deletes this rectangle
+     * Deletes this ellipse from the canvas
      */
     @Override
     public void delete() {
@@ -149,7 +138,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Fills this rectangle.
+     * Fills this ellipse.
      */
     @Override
     public void fill() {
@@ -158,30 +147,31 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     }
 
     /**
-     * Returns a string representation of the rectangle, including both endpoints.
+     * Returns a string representation of this ellipse.
      *
-     * @return a string describing the rectangle's coordinates
+     * @return a string describing the ellipse's position and dimensions
      */
     @Override
     public String toString() {
-        return "Rectangle[x=" + getX() + ",y=" + getY() + ",width=" + getWidth() + ",height=" + getHeight() + "]";
+        return "Ellipse[x=" + getX() + ",y=" + getY() + ",width=" + getWidth() + ",height=" + getHeight() + "]";
     }
 
     /**
-     * Paints the rectangle using the specified Graphics2D context.
+     * Paints this ellipse using the given Graphics2D context.
+     * This is called by the canvas to render the shape.
      *
-     * @param g2D the graphics context to paint with
+     * @param g2D the Graphics2D context to draw with
      */
     @Override
     public void paintShape(Graphics2D g2D) {
-        Rectangle2D.Double rect = new Rectangle2D.Double(getX(), getY(), getWidth(), getHeight());
+        Ellipse2D.Double ellipse = new Ellipse2D.Double(getX(), getY(), getWidth(), getHeight());
         g2D.setColor(new java.awt.Color((int) color.getRed(), (int) color.getGreen(), (int) color.getBlue()));
 
         if (filled) {
-            g2D.fill(rect);
+            g2D.fill(ellipse);
 
         } else {
-            g2D.draw(rect);
+            g2D.draw(ellipse);
         }
     }
 }
