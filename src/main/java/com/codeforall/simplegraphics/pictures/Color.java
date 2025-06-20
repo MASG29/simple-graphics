@@ -1,13 +1,13 @@
-package org.academiadecodigo.simplegraphics.graphics;
+package com.codeforall.simplegraphics.pictures;
 
-public class Color
-{
-    private int red;
-    private int green;
-    private int blue;
+/**
+ * A simple representation of an RGB color for pictures.
+ * This class encapsulates the red, green, and blue components of a color,
+ * each represented by an integer value between 0 and 255.
+ */
+public class Color {
 
     // Color constants
-
     public static final Color RED = new Color(255, 0, 0);
     public static final Color GREEN = new Color(0, 255, 0);
     public static final Color BLUE = new Color(0, 0, 255);
@@ -21,15 +21,18 @@ public class Color
     public static final Color YELLOW = new Color(255, 255, 0);
     public static final Color PINK = new Color(255, 175, 175);
     public static final Color ORANGE = new Color(255, 200, 0);
-    
+
+    private int red;
+    private int green;
+    private int blue;
+
     /**
      * Constructs a new Color object.
      * @param red the red value of the color (between 0 and 255)
      * @param green the green value of the color (between 0 and 255)
      * @param blue the blue value of the color (between 0 and 255)
      */
-    public Color(int red, int green, int blue)
-    {
+    public Color(int red, int green, int blue) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -37,28 +40,38 @@ public class Color
 
     /**
      * Gets the red value of this color.
+     *
      * @return the red value (between 0 and 255)
      */
-    public int getRed()
-    {
-       return red;
+    public int getRed() {
+        return red;
     }
 
     /**
      * Gets the green value of this color.
+     *
      * @return the green value (between 0 and 255)
      */
-    public int getGreen()
-    {
-       return green;
+    public int getGreen() {
+        return green;
     }
 
     /**
      * Gets the blue value of this color.
+     *
      * @return the blue value (between 0 and 255)
      */
-    public int getBlue()
-    {
-       return blue;
+    public int getBlue() {
+        return blue;
+    }
+
+    /**
+     * Returns a string representation of the color.
+     *
+     * @return a string describing the RGB color
+     */
+    @Override
+    public String toString() {
+        return "Color[red=" + red + ",green=" + green + ",blue=" + blue + "]";
     }
 }

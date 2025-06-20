@@ -1,4 +1,4 @@
-package org.academiadecodigo.simplegraphics.graphics;
+package com.codeforall.simplegraphics.graphics;
 
 import java.awt.*;
 
@@ -6,6 +6,7 @@ import java.awt.*;
  * A shape that can be drawn on a canvas.
  */
 public interface Shape {
+
     /**
      * Gets the leftmost x-position of the shape.
      *
@@ -55,8 +56,7 @@ public interface Shape {
     /**
      * Paints the shape
      *
-     * @param g2 the graphics object
+     * @param g2D the graphics object
      */
-    void paintShape(Graphics2D g2);
-
+    void paintShape(Graphics2D g2D);
 }

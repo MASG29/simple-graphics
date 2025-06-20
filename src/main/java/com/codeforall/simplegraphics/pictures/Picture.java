@@ -1,9 +1,9 @@
-package org.academiadecodigo.simplegraphics.pictures;
+package com.codeforall.simplegraphics.pictures;
 
-import org.academiadecodigo.simplegraphics.graphics.Canvas;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Movable;
-import org.academiadecodigo.simplegraphics.graphics.Shape;
+import com.codeforall.simplegraphics.graphics.Shape;
+import com.codeforall.simplegraphics.graphics.Canvas;
+import com.codeforall.simplegraphics.graphics.Movable;
+import com.codeforall.simplegraphics.graphics.Color;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -14,18 +14,26 @@ import java.net.URL;
 
 /**
  * A picture from an image file.
+ *
+ * Implements:
+ * <ul>
+ *     <li>{@link Shape} – for rendering and bounding box info</li>
+ *     <li>{@link Movable} – for translation and scaling</li>
+ * </ul>
  */
 public class Picture implements Shape, Movable {
+
     private BufferedImage image;
     private JLabel label = new JLabel();
     private String source;
+
     private double x;
     private double y;
     private double xGrow;
     private double yGrow;
 
     /**
-     * Constructs a picture with no image.
+     * Constructs a picture object with no image.
      */
     public Picture() {
     }
@@ -39,6 +47,7 @@ public class Picture implements Shape, Movable {
     public Picture(double width, double height) {
         image = new BufferedImage((int) Math.round(width),
                 (int) Math.round(height), BufferedImage.TYPE_INT_RGB);
+
         label.setIcon(new ImageIcon(image));
         label.setText("");
     }
@@ -53,22 +62,45 @@ public class Picture implements Shape, Movable {
     public Picture(double x, double y, String source) {
         this.x = x;
         this.y = y;
+
         load(source);
     }
 
+    /**
+     * Constructs a picture from a 2D array of grayscale values.
+     * Each element in the array represents a pixel's grayscale intensity, where
+     * 0 is black, 255 is white, and values in between are shades of gray.
+     * The resulting image is built pixel by pixel using these values.
+     *
+     * @param grayLevels a 2D array representing grayscale values for the image;
+     *                   rows correspond to image height and columns to width
+     */
     public Picture(int[][] grayLevels) {
         image = new BufferedImage(grayLevels[0].length, grayLevels.length, BufferedImage.TYPE_INT_RGB);
-        for (int i = 0; i < image.getWidth(); i++)
+
+        for (int i = 0; i < image.getWidth(); i++) {
+
             for (int j = 0; j < image.getHeight(); j++) {
                 int gray = grayLevels[j][i];
-                if (gray < 0) gray = 0;
-                if (gray > 255) gray = 255;
+
+                if (gray < 0) {
+                    gray = 0;
+                }
+
+                if (gray > 255) {
+                    gray = 255;
+                }
+
                 int rgb = gray * (65536 + 256 + 1);
+
                 image.setRGB(i, j, rgb);
             }
+        }
+
         label.setIcon(new ImageIcon(image));
         label.setText("");
     }
+
 
     /**
      * Loads a new image from a given file or URL.
@@ -81,7 +113,7 @@ public class Picture implements Shape, Movable {
             this.source = source;
 
             // Load from the web
-            if (source.startsWith("http://")) {
+            if (source.startsWith("http://") || source.startsWith("https://")) {
 
                 image = ImageIO.read(new URL(source).openStream());
 
@@ -89,8 +121,10 @@ public class Picture implements Shape, Movable {
 
                 // Attempt to load from the class path (as in JAR file..)
                 URL url = getClass().getResource(source.startsWith("/") ? source : "/" + source);
+
                 if (url != null) {
                     image = ImageIO.read(url.openStream());
+
                 } else {
 
                     // Load from file
@@ -100,12 +134,14 @@ public class Picture implements Shape, Movable {
 
             label.setIcon(new ImageIcon(image));
             label.setText("");
+
         } catch (Exception ex) {
             image = null;
             label.setIcon(null);
             ex.printStackTrace();
         }
-        Canvas.getInstance().repaint();
+
+        Canvas.getCanvas().repaint();
     }
 
     /**
@@ -113,6 +149,7 @@ public class Picture implements Shape, Movable {
      *
      * @return the leftmost x-position
      */
+    @Override
     public int getX() {
         return (int) Math.round(x - xGrow);
     }
@@ -122,6 +159,7 @@ public class Picture implements Shape, Movable {
      *
      * @return the topmost y-position
      */
+    @Override
     public int getY() {
         return (int) Math.round(y - yGrow);
     }
@@ -147,6 +185,7 @@ public class Picture implements Shape, Movable {
     /**
      * Gets the width of this picture.
      */
+    @Override
     public int getWidth() {
         return (int) Math.round(
                 (image == null ? 0 : image.getWidth()) + 2 * xGrow);
@@ -155,6 +194,7 @@ public class Picture implements Shape, Movable {
     /**
      * Gets the height of this picture.
      */
+    @Override
     public int getHeight() {
         return (int) Math.round(
                 (image == null ? 0 : image.getHeight()) + 2 * yGrow);
@@ -168,24 +208,38 @@ public class Picture implements Shape, Movable {
     public int pixels() {
         if (image == null) {
             return 0;
+
         } else {
             return image.getWidth() * image.getHeight();
         }
     }
 
     public int[][] getGrayLevels() {
-        if (image == null) return new int[0][0];
+
+        if (image == null) {
+            return new int[0][0];
+        }
+
         int[][] grayLevels = new int[getHeight()][getWidth()];
 
-        for (int i = 0; i < grayLevels.length; i++)
+        for (int i = 0; i < grayLevels.length; i++) {
+
             for (int j = 0; j < grayLevels[i].length; j++) {
                 int rgb = image.getRGB(j, i);
+
                 // Use NTSC/PAL algorithm to convert RGB to gray level
                 grayLevels[i][j] = (int) (0.2989 * ((rgb >> 16) & 0xFF) + 0.5866 * ((rgb >> 8) & 0xFF) + 0.1144 * (rgb & 0xFF));
             }
+        }
         return grayLevels;
     }
 
+    /**
+     * Returns a string representation of the image.
+     *
+     * @return a string describing the image's coordinates, size and source
+     */
+    @Override
     public String toString() {
         return "Picture[x=" + getX() + ",y=" + getY() + ",width=" + getWidth() + ",height=" + getHeight() + ",source=" + source + "]";
     }
@@ -196,9 +250,11 @@ public class Picture implements Shape, Movable {
      * @param i the pixel index
      * @return the color at pixel i
      */
-    public org.academiadecodigo.simplegraphics.graphics.Color getColorAt(int i) {
+    public Color getColorAt(int i) {
+
         if (image == null || i < 0 || i >= pixels()) {
             throw new IndexOutOfBoundsException("" + i);
+
         } else {
             return getColorAt(i % image.getWidth(), i / image.getWidth());
         }
@@ -210,9 +266,11 @@ public class Picture implements Shape, Movable {
      * @param i     the pixel index
      * @param color the new color for the pixel
      */
-    public void setColorAt(int i, org.academiadecodigo.simplegraphics.graphics.Color color) {
+    public void setColorAt(int i, Color color) {
+
         if (image == null || i < 0 || i >= pixels()) {
             throw new IndexOutOfBoundsException("" + i);
+
         } else {
             setColorAt(i % image.getWidth(), i / image.getWidth(), color);
         }
@@ -225,12 +283,14 @@ public class Picture implements Shape, Movable {
      * @param y the y-coordinate (row) of the pixel
      * @return the color of the pixel
      */
-    public org.academiadecodigo.simplegraphics.graphics.Color getColorAt(int x, int y) {
+    public Color getColorAt(int x, int y) {
+
         if (image == null || x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
             throw new IndexOutOfBoundsException("(" + x + "," + y + ")");
+
         } else {
             int rgb = image.getRGB(x, y) & 0xFFFFFF;
-            return new org.academiadecodigo.simplegraphics.graphics.Color(rgb / 65536, (rgb / 256) % 256, rgb % 256);
+            return new Color(rgb / 65536, (rgb / 256) % 256, rgb % 256);
         }
     }
 
@@ -242,11 +302,13 @@ public class Picture implements Shape, Movable {
      * @param color the color of the pixel at the given row and column
      */
     public void setColorAt(int x, int y, Color color) {
+
         if (image == null || x < 0 || x >= image.getWidth() || y < 0 || y >= image.getHeight()) {
             throw new IndexOutOfBoundsException("(" + x + "," + y + ")");
+
         } else {
             image.setRGB(x, y, ((int) color.getRed()) * 65536 + ((int) color.getGreen()) * 256 + (int) color.getBlue());
-            org.academiadecodigo.simplegraphics.graphics.Canvas.getInstance().repaint();
+            Canvas.getCanvas().repaint();
         }
     }
 
@@ -256,10 +318,11 @@ public class Picture implements Shape, Movable {
      * @param dx the amount by which to move in x-direction
      * @param dy the amount by which to move in y-direction
      */
+    @Override
     public void translate(double dx, double dy) {
         x += dx;
         y += dy;
-        org.academiadecodigo.simplegraphics.graphics.Canvas.getInstance().repaint();
+        Canvas.getCanvas().repaint();
     }
 
     /**
@@ -268,40 +331,48 @@ public class Picture implements Shape, Movable {
      * @param dw the amount by which to resize the width on each side
      * @param dh the amount by which to resize the height on each side
      */
+    @Override
     public void grow(double dw, double dh) {
         xGrow += dw;
         yGrow += dh;
-        org.academiadecodigo.simplegraphics.graphics.Canvas.getInstance().repaint();
+        Canvas.getCanvas().repaint();
     }
 
     /**
      * Shows this picture on the canvas.
      */
+    @Override
     public void draw() {
-        org.academiadecodigo.simplegraphics.graphics.Canvas.getInstance().show(this);
+        Canvas.getCanvas().show(this);
     }
 
     /**
      * Deletes this picture from the canvas.
      */
+    @Override
     public void delete() {
-        org.academiadecodigo.simplegraphics.graphics.Canvas.getInstance().hide(this);
+        Canvas.getCanvas().hide(this);
     }
 
     /**
      * Draws this shape.
      *
-     * @param g2 the graphics context
+     * @param g2D the graphics context
      */
-    public void paintShape(Graphics2D g2) {
+    @Override
+    public void paintShape(Graphics2D g2D) {
+
         if (image != null) {
             Dimension dim = label.getPreferredSize();
+
             if (dim.width > 0 && dim.height > 0) {
                 label.setBounds(0, 0, dim.width, dim.height);
-                g2.translate(getX(), getY());
-                g2.scale((image.getWidth() + 2 * xGrow) / dim.width,
+                g2D.translate(getX(), getY());
+
+                g2D.scale((image.getWidth() + 2 * xGrow) / dim.width,
                         (image.getHeight() + 2 * yGrow) / dim.height);
-                label.paint(g2);
+
+                label.paint(g2D);
             }
         }
     }

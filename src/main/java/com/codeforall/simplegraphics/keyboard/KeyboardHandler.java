@@ -1,4 +1,4 @@
-package org.academiadecodigo.simplegraphics.keyboard;
+package com.codeforall.simplegraphics.keyboard;
 
 import java.awt.event.KeyEvent;
 
@@ -12,12 +12,11 @@ public interface KeyboardHandler {
      * @see java.awt.event.KeyListener#keyPressed(KeyEvent)
      * @param e the event
      */
-    public void keyPressed(KeyboardEvent e);
+    void keyPressed(KeyboardEvent e);
 
     /**
      * @see java.awt.event.KeyListener#keyReleased(KeyEvent)
      * @param e the event
      */
-    public void keyReleased(KeyboardEvent e);
-
+    void keyReleased(KeyboardEvent e);
 }

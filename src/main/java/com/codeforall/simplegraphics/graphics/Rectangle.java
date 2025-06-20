@@ -1,9 +1,26 @@
-package org.academiadecodigo.simplegraphics.graphics;
+package com.codeforall.simplegraphics.graphics;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * The {@code Rectangle} class represents a drawable and optionally filled rectangle
+ * that can be displayed on a canvas. This class allows manipulation of the rectangle's
+ * size, position, and color, and provides basic drawing and transformation capabilities.
+ *
+ * Implements:
+ *  <ul>
+ *      <li>{@link Shape} – for rendering and bounding box info</li>
+ *      <li>{@link Colorable} – for setting its color</li>
+ *      <li>{@link Fillable} – for supporting fill operations</li>
+ *      <li>{@link Movable} – for translation and scaling</li>
+ *  </ul>
+ *
+ * <strong>Note:</strong> This class is distinct from {@code java.awt.Rectangle}
+ * and is intended for use within the simplegraphics library.
+ */
 public class Rectangle implements Shape, Colorable, Fillable, Movable {
+
     private Color color = Color.BLACK;
     private boolean filled = false;
     private double x;
@@ -82,10 +99,11 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
      * @param dx the amount by which to move in x-direction
      * @param dy the amount by which to move in y-direction
      */
+    @Override
     public void translate(double dx, double dy) {
         x += dx;
         y += dy;
-        Canvas.getInstance().repaint();
+        Canvas.getCanvas().repaint();
     }
 
     /**
@@ -99,7 +117,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
         height += 2 * dh;
         x -= dw;
         y -= dh;
-        Canvas.getInstance().repaint();
+        Canvas.getCanvas().repaint();
     }
 
     /**
@@ -110,7 +128,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     @Override
     public void setColor(Color newColor) {
         color = newColor;
-        Canvas.getInstance().repaint();
+        Canvas.getCanvas().repaint();
     }
 
     /**
@@ -119,7 +137,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     @Override
     public void draw() {
         filled = false;
-        Canvas.getInstance().show(this);
+        Canvas.getCanvas().show(this);
     }
 
     /**
@@ -127,7 +145,7 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
      */
     @Override
     public void delete() {
-        Canvas.getInstance().hide(this);
+        Canvas.getCanvas().hide(this);
     }
 
     /**
@@ -136,25 +154,34 @@ public class Rectangle implements Shape, Colorable, Fillable, Movable {
     @Override
     public void fill() {
         filled = true;
-        Canvas.getInstance().show(this);
+        Canvas.getCanvas().show(this);
     }
 
+    /**
+     * Returns a string representation of the rectangle, including both endpoints.
+     *
+     * @return a string describing the rectangle's coordinates
+     */
     @Override
     public String toString() {
         return "Rectangle[x=" + getX() + ",y=" + getY() + ",width=" + getWidth() + ",height=" + getHeight() + "]";
     }
 
+    /**
+     * Paints the rectangle using the specified Graphics2D context.
+     *
+     * @param g2D the graphics context to paint with
+     */
     @Override
-    public void paintShape(Graphics2D g2) {
+    public void paintShape(Graphics2D g2D) {
         Rectangle2D.Double rect = new Rectangle2D.Double(getX(), getY(), getWidth(), getHeight());
-        g2.setColor(new java.awt.Color((int) color.getRed(), (int) color.getGreen(), (int) color.getBlue()));
+        g2D.setColor(new java.awt.Color((int) color.getRed(), (int) color.getGreen(), (int) color.getBlue()));
 
         if (filled) {
-
-            g2.fill(rect);
+            g2D.fill(rect);
 
         } else {
-            g2.draw(rect);
+            g2D.draw(rect);
         }
     }
 }

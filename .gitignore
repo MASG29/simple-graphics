@@ -1,7 +1,7 @@
-target
-build
-doc
-out
 .idea
+out
 *.iml
 .DS_Store
+target
+build
+package-lock.json

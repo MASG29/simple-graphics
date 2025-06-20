@@ -1,14 +1,14 @@
-package org.academiadecodigo.simplegraphics.test;
+package com.codeforall.simplegraphics.test;
 
-import org.academiadecodigo.simplegraphics.graphics.*;
-import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-import org.academiadecodigo.simplegraphics.mouse.Mouse;
-import org.academiadecodigo.simplegraphics.mouse.MouseEvent;
-import org.academiadecodigo.simplegraphics.mouse.MouseHandler;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
+import com.codeforall.simplegraphics.graphics.*;
+import com.codeforall.simplegraphics.keyboard.Keyboard;
+import com.codeforall.simplegraphics.keyboard.KeyboardEventType;
+import com.codeforall.simplegraphics.keyboard.KeyboardHandler;
+import com.codeforall.simplegraphics.mouse.Mouse;
+import com.codeforall.simplegraphics.mouse.MouseEvent;
+import com.codeforall.simplegraphics.mouse.MouseHandler;
+import com.codeforall.simplegraphics.pictures.Picture;
+import com.codeforall.simplegraphics.keyboard.KeyboardEvent;
 
 public class Tester implements KeyboardHandler, MouseHandler {
 
@@ -49,7 +49,7 @@ public class Tester implements KeyboardHandler, MouseHandler {
         text.setColor(Color.MAGENTA);
         text.draw();
 
-        Picture pic = new Picture(20, 220, "http://static0.bigstockphoto.com/thumbs/3/5/2/small2/25346960.jpg");
+        Picture pic = new Picture(20, 220, "https://codeforall.com/hs-fs/hubfs/Logos%20And%20Symbols/Code%20for%20All_/Favicon-2.png?width=190&height=190&name=Favicon-2.png");
         pic.draw();
 
         Thread.sleep(2000);
@@ -70,7 +70,7 @@ public class Tester implements KeyboardHandler, MouseHandler {
 
         Thread.sleep(2000);
 
-        text.setText("Academia de Codigo");
+        text.setText("Code for All_");
     }
 
     @Override
