@@ -86,6 +86,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
     /**
      * @param e the event to be processed
      * @see MouseListener#mousePressed(MouseEvent)
+     * <strong>Note:</strong> Method purposely not implemented
      */
     @Override
     public void mousePressed(MouseEvent e) {}
@@ -93,6 +94,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
     /**
      * @param e the event to be processed
      * @see MouseListener#mouseReleased(MouseEvent)
+     * <strong>Note:</strong> Method purposely not implemented
      */
     @Override
     public void mouseReleased(MouseEvent e) {}
@@ -100,6 +102,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
     /**
      * @param e the event to be processed
      * @see MouseListener#mouseEntered(MouseEvent)
+     * <strong>Note:</strong> Method purposely not implemented
      */
     @Override
     public void mouseEntered(MouseEvent e) {}
@@ -107,6 +110,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
     /**
      * @param e the event to be processed
      * @see MouseListener#mouseExited(MouseEvent)
+     * <strong>Note:</strong> Method purposely not implemented
      */
     @Override
     public void mouseExited(MouseEvent e) {}
@@ -114,6 +118,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
     /**
      * @param e the event to be processed
      * @see MouseMotionListener#mouseDragged(MouseEvent)
+     * <strong>Note:</strong> Method purposely not implemented
      */
     @Override
     public void mouseDragged(MouseEvent e) {}
