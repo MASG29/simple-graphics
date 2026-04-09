@@ -11,8 +11,6 @@ public class Pickup {
 
     private static final int PICKUP_SIZE = 20;
 
-    private double x;
-    private double y;
     private boolean alive;
     private PickupType pickupType;
     private int value;
@@ -26,8 +24,6 @@ public class Pickup {
      * @param pickupType the type of pickup
      */
     public Pickup(double x, double y, PickupType pickupType) {
-        this.x = x;
-        this.y = y;
         this.pickupType = pickupType;
         this.value = pickupType.getValue();
         this.alive = true;
